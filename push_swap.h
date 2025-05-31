@@ -6,11 +6,13 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/05/31 21:33:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/05/31 23:34:16 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+
+# include <limits.h>
 
 #endif
