@@ -6,88 +6,117 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 22:25:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/01 00:30:30 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:34:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_within_int_range(char *str)
+int	has_duplicates(t_number_info *numbers, int count)
 {
-	int			i;
-	int			digit_count;
-	int			sign;
-	long long	result;
+	int	i;
+	int	j;
 
 	i = 0;
-	digit_count = 0;
-	sign = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	while (i < count)
+	{
+		j = i + 1;
+		while (j < count)
+		{
+			if (numbers[i].value == numbers[j].value)
+				return (1);
+			j++;
+		}
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	}
+	return (0);
+}
+
+int	ft_atoll(const char *str, long long *result)
+{
+	int			i;
+	int			sign;
+	long long	res;
+	int			digit_count;
+
+	i = 0;
+	sign = 1;
+	digit_count = 0;
+	res = 0;
+	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
 			sign = -1;
 		i++;
 	}
-	while (str[i] == '0')
-		i++;
-	result = 0;
-	while ((str[i] >= '0' && str[i] <= '9'))
+	while (str[i])
 	{
-		result = result * 10 + (str[i] - '0');
-		i++;
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
 		digit_count++;
+		if ((sign == 1 && (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10
+						&& (str[i] - '0') > LLONG_MAX % 10))) || (sign == -1
+				&& (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && (str[i]
+							- '0') > (LLONG_MAX % 10) + 1))))
+			return (0);
+		res = res * 10 + (str[i] - '0');
+		i++;
 	}
-	if (digit_count > 10)
+	if (digit_count == 0)
 		return (0);
-	if (sign == 1)
-	{
-		if (result > (long long)INT_MAX)
-			return (0);
-	}
-	else
-	{
-		if (result > -((long long)INT_MIN))
-			return (0);
-	}
+	*result = res * sign;
 	return (1);
 }
 
-int	is_valid_input(int argc, const *argv[])
+int	validate_and_parse_args(int argc, char **argv, t_number_info **numbers)
 {
-	int	i;
-	int	j;
+	int			i;
+	long long	converted_value;
 
+	*numbers = malloc(sizeof(t_number_info) * (argc - 1));
+	if (!(*numbers))
+		return (0);
 	i = 1;
 	while (i < argc)
 	{
-		j = 0;
-		if (argv[i][j] == '-' || argv[i][j] == '+')
-			j++;
-		if (!argv[i][j])
-			return (0);
-		while (argv[i][j])
+		if (!ft_atoll(argv[i], &converted_value))
 		{
-			if (!ft_isdigit(argv[i][j]))
-				return (0);
-			j++;
-		}
-		if (!(is_within_int_range(argv[i])))
+			free(*numbers);
 			return (0);
+		}
+		if (converted_value > INT_MAX || converted_value < INT_MIN)
+		{
+			free(*numbers);
+			return (0);
+		}
+		(*numbers)[i - 1].value = (int)converted_value;
+		(*numbers)[i - 1].rank = -1;
 		i++;
+	}
+	if (has_duplicates(*numbers, argc - 1))
+	{
+		free(*numbers);
+		return (0);
 	}
 	return (1);
 }
 
-int	main(int argc, char const *argv[])
+int	main(int argc, const char *argv[])
 {
+	int				count;
+	t_number_info	*numbers_array;
+
 	if (argc == 1)
 		return (0);
-	if (is_valid_input(argc, argv))
+	numbers_array = NULL;
+	count = argc - 1;
+	if (validate_and_parse_args(argc, argv, &numbers_array) == 0)
 	{
-		ft_printf("Error\n");
-		return (0);
+		write(2, "Error\n", 6);
+		return (1);
 	}
+	free(numbers_array);
 	return (0);
 }
