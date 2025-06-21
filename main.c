@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 22:25:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/14 23:34:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/21 22:20:35 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,22 @@ int	validate_and_parse_args(int argc, char **argv, t_number_info **numbers)
 int	main(int argc, const char *argv[])
 {
 	int				count;
-	t_number_info	*numbers_array;
+	t_number_info	*numbers;
 
 	if (argc == 1)
 		return (0);
-	numbers_array = NULL;
+	numbers = NULL;
 	count = argc - 1;
-	if (validate_and_parse_args(argc, argv, &numbers_array) == 0)
+	if (validate_and_parse_args(argc, argv, &numbers) == 0)
 	{
 		write(2, "Error\n", 6);
 		return (1);
 	}
-	free(numbers_array);
+	if (!assign_ranks(numbers, argc - 1))
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	free(numbers);
 	return (0);
 }
