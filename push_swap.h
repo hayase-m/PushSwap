@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 18:10:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:26:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ typedef struct s_chunk_info
 	int					remainder;
 	int					total_size;
 }						t_chunk_info;
+
+typedef struct s_move_costs
+{
+	int					cost_a;
+	int					cost_b;
+	int					total_cost;
+	int					index_a;
+	int					index_b;
+	int					dir_a;
+	int					dir_b;
+}						t_move_costs;
 
 int						assign_ranks(t_number_info *numbers, int count);
 
