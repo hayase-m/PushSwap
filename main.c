@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 22:25:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 18:04:26 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:10:17 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	ft_atoll(const char *str, long long *result)
 	return (1);
 }
 
-int	validate_and_parse_args(int argc, char **argv, t_number_info **numbers)
+int	validate_and_parse_args(int argc, const char **argv,
+		t_number_info **numbers)
 {
 	int			i;
 	long long	converted_value;
