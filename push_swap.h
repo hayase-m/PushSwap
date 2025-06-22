@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 20:26:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 00:35:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@ typedef struct s_chunk_info
 	int					total_size;
 }						t_chunk_info;
 
-typedef struct s_move_costs
+typedef struct s_move
 {
-	int					cost_a;
-	int					cost_b;
-	int					total_cost;
-	int					index_a;
-	int					index_b;
-	int					dir_a;
-	int					dir_b;
-}						t_move_costs;
+	int					rank;
+	int					a_index;
+	int					b_index;
+	int					cost;
+	int					a_dir;
+	int					b_dir;
+}						t_move;
 
 int						assign_ranks(t_number_info *numbers, int count);
 
@@ -89,5 +88,8 @@ t_stack_node			*build_stack(t_number_info *numbers, int count);
 
 void					solver(t_stack_node *stack_a, t_stack_node *stack_b,
 							int size);
+
+int						ft_max(int a, int b);
+int						ft_abs(int a);
 
 #endif
