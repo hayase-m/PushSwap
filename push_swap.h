@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 17:49:21 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:02:48 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ void					push_cheapest_in_range(t_stack_node *stack_a,
 							int range_end);
 int						find_index_by_rank(t_stack_node *stack,
 							int target_rank);
+
+t_stack_node			*build_stack(t_number_info *numbers, int count);
 
 #endif

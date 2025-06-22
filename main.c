@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 22:25:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/21 22:20:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:04:26 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int	main(int argc, const char *argv[])
 {
 	int				count;
 	t_number_info	*numbers;
+	t_stack_node	*stack_a;
+	t_stack_node	*stack_b;
 
 	if (argc == 1)
 		return (0);
@@ -122,6 +124,18 @@ int	main(int argc, const char *argv[])
 		write(2, "Error\n", 6);
 		return (1);
 	}
+	stack_a = build_stack(numbers, count);
 	free(numbers);
+	if (!stack_a)
+		return (1);
+	stack_b = create_dummy_stack();
+	if (!stack_b)
+	{
+		free_stack(&stack_a);
+		return (1);
+	}
+	solver(stack_a, stack_b, count);
+	free_stack(&stack_a);
+	free_stack(&stack_b);
 	return (0);
 }
