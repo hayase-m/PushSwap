@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 19:07:45 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:46:07 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,12 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 static void	_push_sorted_to_a(t_stack_node *stack_a, t_stack_node *stack_b,
 		int size)
 {
-	int	target_rank;
-	int	target_index;
-	int	current_size_b;
+	t_move	move;
 
-	target_rank = size - 1;
 	while (stack_b->next != stack_b)
 	{
-		target_index = find_index_by_rank(stack_b, target_rank);
-		current_size_b = count_stack_nodes(stack_b);
-		execute_rotation(stack_b, target_index, current_size_b);
-		op_pa(stack_a, stack_b);
-		target_rank--;
+		move = find_best_move(stack_a, stack_b);
+		execute_best_move(stack_a, stack_b, move);
 	}
 }
 

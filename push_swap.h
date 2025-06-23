@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 00:35:32 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:43:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_move
 	int					rank;
 	int					a_index;
 	int					b_index;
+	int					a_size;
+	int					b_size;
 	int					cost;
 	int					a_dir;
 	int					b_dir;
@@ -90,6 +92,12 @@ void					solver(t_stack_node *stack_a, t_stack_node *stack_b,
 							int size);
 
 int						ft_max(int a, int b);
+int						ft_min(int a, int b);
 int						ft_abs(int a);
+
+void					execute_best_move(t_stack_node *stack_a,
+							t_stack_node *stack_b, t_move move);
+t_move					find_best_move(t_stack_node *stack_a,
+							t_stack_node *stack_b);
 
 #endif

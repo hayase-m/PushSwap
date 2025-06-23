@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 01:28:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:43:55 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	_find_best_fit_index(t_stack_node *stack, int target_rank)
 	return (best_index);
 }
 
-int	find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
+static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
 {
 	t_stack_node	*current_node;
 	int				i;
@@ -73,29 +73,29 @@ int	find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
 		return (min_rank_index);
 }
 
-void	calculate_cost(t_move *move, int a_size, int b_size)
+static void	_calculate_cost(t_move *move)
 {
 	int	a_cost;
 	int	b_cost;
 
-	if (move->a_index <= a_size / 2)
+	if (move->a_index <= move->a_size / 2)
 	{
 		a_cost = move->a_index;
 		move->a_dir = 1;
 	}
 	else
 	{
-		a_cost = -(a_size - move->a_index);
+		a_cost = -(move->a_size - move->a_index);
 		move->a_dir = -1;
 	}
-	if (move->b_index <= b_size / 2)
+	if (move->b_index <= move->b_size / 2)
 	{
 		b_cost = move->b_index;
 		move->b_dir = 1;
 	}
 	else
 	{
-		b_cost = -(b_size - move->b_index);
+		b_cost = -(move->b_size - move->b_index);
 		move->b_dir = -1;
 	}
 	if ((a_cost >= 0 && b_cost >= 0) || (a_cost < 0 && b_cost < 0))
@@ -109,21 +109,19 @@ t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b)
 	t_move			best_move;
 	t_move			current_move;
 	t_stack_node	*current_node;
-	int				a_size;
-	int				b_size;
 	int				b_index;
 
-	a_size = count_stack_nodes(stack_a);
-	b_size = count_stack_nodes(stack_b);
+	current_move.a_size = count_stack_nodes(stack_a);
+	current_move.b_size = count_stack_nodes(stack_b);
 	b_index = 0;
 	current_move.b_index = 0;
 	best_move.cost = INT_MAX;
 	current_node = stack_b->next;
 	while (current_node != stack_b)
 	{
-		current_move.a_index = find_dest_index_in_a(stack_a,
+		current_move.a_index = _find_dest_index_in_a(stack_a,
 				current_node->rank);
-		calculate_cost(&current_move, a_size, b_size);
+		_calculate_cost(&current_move);
 		if (current_move.cost < best_move.cost)
 		{
 			best_move.cost = current_move.cost;
@@ -139,19 +137,74 @@ t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b)
 	return (best_move);
 }
 
-void	execute_best_move(t_stack_node *stack_a, t_stack_node *stack_b,
-		t_move move)
+static void	_execute_same_direction(t_stack_node *stack_a,
+		t_stack_node *stack_b, t_move *move)
 {
-	int	a_size;
-	int	b_size;
+	int	common_rotations;
+	int	remain_a_rotations;
+	int	remain_b_rotations;
 
-	a_size = count_stack_nodes(stack_a);
-	b_size = count_stack_nodes(stack_b);
-	if (move.a_dir == move.b_dir)
+	if (move->a_dir == 1)
 	{
+		common_rotations = ft_min(move->a_index, move->b_index);
+		remain_a_rotations = move->a_index - common_rotations;
+		remain_b_rotations = move->b_index - common_rotations;
+		while (common_rotations--)
+			op_rr(stack_a, stack_b);
+		while (remain_a_rotations)
+			op_ra(stack_a);
+		while (remain_b_rotations)
+			op_rb(stack_b);
 	}
 	else
 	{
+		common_rotations = ft_min(move->a_size - move->a_index, move->b_size
+				- move->b_index);
+		remain_a_rotations = move->a_size - move->a_index - common_rotations;
+		remain_b_rotations = move->b_size - move->b_index - common_rotations;
+		while (common_rotations--)
+			op_rrr(stack_a, stack_b);
+		while (remain_a_rotations)
+			op_rra(stack_a);
+		while (remain_b_rotations)
+			op_rrb(stack_b);
+	}
+}
+
+static void	_execute_diff_direction(t_stack_node *stack_a,
+		t_stack_node *stack_b, t_move *move)
+{
+	int	a_rotations;
+	int	b_rotations;
+
+	if (move->a_dir == 1)
+	{
+		a_rotations = move->a_index;
+		b_rotations = move->b_size - move->b_index;
+		while (a_rotations--)
+			op_ra(stack_a);
+		while (b_rotations--)
+			op_rrb(stack_b);
+	}
+	else
+	{
+		a_rotations = move->a_size - move->a_index;
+		b_rotations = move->b_index;
+		while (a_rotations--)
+			op_rra(stack_a);
+		while (b_rotations--)
+			op_rb(stack_b);
+	}
+}
+
+void	execute_best_move(t_stack_node *stack_a, t_stack_node *stack_b,
+		t_move move)
+{
+	if (move.a_dir == move.b_dir)
+		_execute_same_direction(stack_a, stack_b, &move);
+	else
+	{
+		_execute_diff_direction(stack_a, stack_b, &move);
 	}
 	op_pa(stack_a, stack_b);
 }
