@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 16:42:49 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:47:15 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,17 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 		{
 			push_cheapest_in_range(stack_a, stack_b, &range, current_size_a);
 			current_size_a--;
+			if (i == 0)
+			{
+				if (stack_b->next->rank < (range.end / 2))
+					op_rb(stack_b);
+			}
 			j++;
 		}
 		i++;
 	}
 }
+
 static void	_push_sorted_to_a(t_stack_node *stack_a, t_stack_node *stack_b,
 		int size)
 {
@@ -65,10 +71,10 @@ void	sort_large(t_stack_node *stack_a, t_stack_node *stack_b, int size)
 	int				rank_zero_index;
 
 	info.total_size = size;
-	if (size <= 150)
-		info.count = 5;
+	if (size <= 100)
+		info.count = 1;
 	else
-		info.count = 11;
+		info.count = 3; // 9 2=4423,3=4338, 4=4415,5=4559
 	info.size = size / info.count;
 	info.remainder = size % info.count;
 	_push_chunks_to_b(stack_a, stack_b, &info);

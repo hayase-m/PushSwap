@@ -6,47 +6,33 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 15:12:43 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:11:52 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	_find_min_rank_index(t_stack_node *stack)
+static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
 {
 	int				i;
 	t_stack_node	*current_node;
 	int				min_rank_index;
 	int				min_rank;
+	int				best_rank;
+	int				best_index;
 
 	i = 0;
-	current_node = stack->next;
+	current_node = stack_a->next;
 	min_rank = INT_MAX;
-	while (current_node != stack)
+	best_rank = INT_MAX;
+	best_index = -1;
+	while (current_node != stack_a)
 	{
 		if (current_node->rank < min_rank)
 		{
 			min_rank_index = i;
 			min_rank = current_node->rank;
 		}
-		current_node = current_node->next;
-		i++;
-	}
-	return (min_rank_index);
-}
-static int	_find_best_fit_index(t_stack_node *stack, int target_rank)
-{
-	int				i;
-	t_stack_node	*current_node;
-	int				best_rank;
-	int				best_index;
-
-	i = 0;
-	current_node = stack->next;
-	best_rank = INT_MAX;
-	best_index = -1;
-	while (current_node != stack)
-	{
 		if (current_node->rank > target_rank && current_node->rank < best_rank)
 		{
 			best_index = i;
@@ -55,16 +41,6 @@ static int	_find_best_fit_index(t_stack_node *stack, int target_rank)
 		i++;
 		current_node = current_node->next;
 	}
-	return (best_index);
-}
-
-static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
-{
-	int	best_index;
-	int	min_rank_index;
-
-	min_rank_index = _find_min_rank_index(stack_a);
-	best_index = _find_best_fit_index(stack_a, target_rank);
 	if (best_index != -1)
 		return (best_index);
 	else
