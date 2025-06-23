@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 13:16:56 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:31:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	_push_sorted_to_a(t_stack_node *stack_a, t_stack_node *stack_b)
 void	sort_large(t_stack_node *stack_a, t_stack_node *stack_b, int size)
 {
 	t_chunk_info	info;
+	int				rank_zero_index;
+	int				size_a;
 
 	info.total_size = size;
 	if (size <= 150)
@@ -63,4 +65,6 @@ void	sort_large(t_stack_node *stack_a, t_stack_node *stack_b, int size)
 	info.remainder = size % info.count;
 	_push_chunks_to_b(stack_a, stack_b, &info);
 	_push_sorted_to_a(stack_a, stack_b);
+	rank_zero_index = find_index_by_rank(stack_a, 0);
+	execute_rotation(stack_a, rank_zero_index, size);
 }
