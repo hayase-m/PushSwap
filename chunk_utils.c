@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 17:35:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 17:50:30 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:49:41 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,27 @@ static void	_update_if_cheaper(int current_cost, int *min_cost, int *best_i,
 	}
 }
 
-static int	_find_best_index(t_stack_node *stack_a, int range_start,
-		int range_end)
+static int	_find_best_index(t_stack_node *stack_a, t_range *range,
+		int current_size_a)
 {
 	t_stack_node	*current_node;
-	int				size;
 	int				min_cost;
 	int				i;
 	int				best_i;
 
 	current_node = stack_a->next;
-	size = count_stack_nodes(stack_a);
 	min_cost = INT_MAX;
 	i = 0;
 	best_i = -1;
 	while (current_node != stack_a)
 	{
-		if (((current_node->rank >= range_start)
-				&& (current_node->rank <= range_end)))
+		if (((current_node->rank >= range->start)
+				&& (current_node->rank <= range->end)))
 		{
-			if (i <= size / 2)
+			if (i <= current_size_a / 2)
 				_update_if_cheaper(i, &min_cost, &best_i, i);
 			else
-				_update_if_cheaper(size - i, &min_cost, &best_i, i);
+				_update_if_cheaper(current_size_a - i, &min_cost, &best_i, i);
 		}
 		current_node = current_node->next;
 		i++;
@@ -53,13 +51,11 @@ static int	_find_best_index(t_stack_node *stack_a, int range_start,
 }
 
 void	push_cheapest_in_range(t_stack_node *stack_a, t_stack_node *stack_b,
-		int range_start, int range_end)
+		t_range *range, int current_size_a)
 {
 	int	best_index;
-	int	current_size_a;
 
-	current_size_a = count_stack_nodes(stack_a);
-	best_index = _find_best_index(stack_a, range_start, range_end);
+	best_index = _find_best_index(stack_a, range, current_size_a);
 	execute_rotation(stack_a, best_index, current_size_a);
 	op_pb(stack_a, stack_b);
 }

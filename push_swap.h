@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 13:07:29 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:13:08 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_chunk_info
 	int					remainder;
 	int					total_size;
 }						t_chunk_info;
+
+typedef struct s_range
+{
+	int					start;
+	int					end;
+}						t_range;
 
 typedef struct s_move
 {
@@ -85,8 +91,8 @@ void					sort_large(t_stack_node *stack_a, t_stack_node *stack_b,
 							int size);
 
 void					push_cheapest_in_range(t_stack_node *stack_a,
-							t_stack_node *stack_b, int range_start,
-							int range_end);
+							t_stack_node *stack_b, t_range *range,
+							int current_size_a);
 int						find_index_by_rank(t_stack_node *stack,
 							int target_rank);
 
@@ -102,6 +108,6 @@ int						ft_abs(int a);
 void					execute_best_move(t_stack_node *stack_a,
 							t_stack_node *stack_b, t_move move);
 t_move					find_best_move(t_stack_node *stack_a,
-							t_stack_node *stack_b);
+							t_stack_node *stack_b, int size_a, int size_b);
 
 #endif

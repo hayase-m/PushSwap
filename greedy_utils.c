@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 13:13:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:12:43 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,15 @@ static void	_calculate_cost(t_move *move)
 		move->cost = move->a_cost + move->b_cost;
 }
 
-t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b)
+t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b, int size_a,
+		int size_b)
 {
 	t_move			best_move;
 	t_move			current_move;
 	t_stack_node	*current_node;
 
-	current_move.a_size = count_stack_nodes(stack_a);
-	current_move.b_size = count_stack_nodes(stack_b);
+	current_move.a_size = size_a;
+	current_move.b_size = size_b;
 	current_move.b_index = 0;
 	best_move.cost = INT_MAX;
 	current_node = stack_b->next;
