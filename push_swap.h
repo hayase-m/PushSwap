@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 12:43:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:07:29 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include <limits.h>
+# include <stdio.h>
+//////////////////////////////////////////////けせ！！//////////////
 # include <unistd.h>
 typedef struct s_number_info
 {
@@ -46,6 +48,8 @@ typedef struct s_move
 	int					a_size;
 	int					b_size;
 	int					cost;
+	int					a_cost;
+	int					b_cost;
 	int					a_dir;
 	int					b_dir;
 }						t_move;
