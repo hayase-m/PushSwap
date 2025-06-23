@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 12:46:07 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:47:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 		i++;
 	}
 }
-static void	_push_sorted_to_a(t_stack_node *stack_a, t_stack_node *stack_b,
-		int size)
+static void	_push_sorted_to_a(t_stack_node *stack_a, t_stack_node *stack_b)
 {
 	t_move	move;
 
@@ -63,5 +62,5 @@ void	sort_large(t_stack_node *stack_a, t_stack_node *stack_b, int size)
 	info.size = size / info.count;
 	info.remainder = size % info.count;
 	_push_chunks_to_b(stack_a, stack_b, &info);
-	_push_sorted_to_a(stack_a, stack_b, size);
+	_push_sorted_to_a(stack_a, stack_b);
 }

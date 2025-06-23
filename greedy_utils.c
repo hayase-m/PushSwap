@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 12:43:55 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:48:44 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ static int	_find_best_fit_index(t_stack_node *stack, int target_rank)
 
 static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
 {
-	t_stack_node	*current_node;
-	int				i;
-	int				best_index;
-	int				min_rank_index;
+	int	best_index;
+	int	min_rank_index;
 
 	min_rank_index = _find_min_rank_index(stack_a);
 	best_index = _find_best_fit_index(stack_a, target_rank);
@@ -109,11 +107,9 @@ t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b)
 	t_move			best_move;
 	t_move			current_move;
 	t_stack_node	*current_node;
-	int				b_index;
 
 	current_move.a_size = count_stack_nodes(stack_a);
 	current_move.b_size = count_stack_nodes(stack_b);
-	b_index = 0;
 	current_move.b_index = 0;
 	best_move.cost = INT_MAX;
 	current_node = stack_b->next;
@@ -132,7 +128,7 @@ t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b)
 			best_move.b_dir = current_move.b_dir;
 		}
 		current_node = current_node->next;
-		b_index++;
+		current_move.b_index++;
 	}
 	return (best_move);
 }
