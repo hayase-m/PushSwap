@@ -10,13 +10,14 @@ BLUE="\033[0;34m"
 RESET="\033[0m"
 
 # --- 実行ファイル名 ---
-PUSH_SWAP="./push_swap"
+# PUSH_SWAP="valgrind --leak-check=full --show-leak-kinds=all ./push_swap"
+PUSH_SWAP="leaks -atExit -q  -- ./push_swap"
 
 # --- 事前チェック ---
-if [ ! -f "$PUSH_SWAP" ]; then
-    echo -e "${RED}エラー: '$PUSH_SWAP' が見つかりません。先に 'make' を実行してください。${RESET}"
-    exit 1
-fi
+# if [ ! -f "$PUSH_SWAP" ]; then
+#     echo -e "${RED}エラー: '$PUSH_SWAP' が見つかりません。先に 'make' を実行してください。${RESET}"
+#     exit 1
+# fi
 
 
 # --- 手数チェック用の関数 ---
