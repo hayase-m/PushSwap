@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:34:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/22 16:56:05 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 00:08:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,4 @@ void	free_stack(t_stack_node **stack)
 	}
 	free(*stack);
 	*stack = NULL;
-}
-int	count_stack_nodes(t_stack_node *stack)
-{
-	int				count;
-	t_stack_node	*current_node;
-
-	count = 0;
-	current_node = stack->next;
-	while (current_node != stack)
-	{
-		current_node = current_node->next;
-		count++;
-	}
-	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/28 23:52:47 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 00:06:55 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_stack_node			*create_node(int value, int rank);
 void					add_node_back(t_stack_node *stack_head,
 							t_stack_node *new_node);
 void					free_stack(t_stack_node **stack);
-int						count_stack_nodes(t_stack_node *stack);
 
 int						is_sorted(t_stack_node *stack);
 void					find_and_rotate(t_stack_node *stack_a, int target_rank,
@@ -101,7 +100,6 @@ void					solver(t_stack_node *stack_a, t_stack_node *stack_b,
 
 int						ft_max(int a, int b);
 int						ft_min(int a, int b);
-int						ft_abs(int a);
 void					free_split(char **split);
 
 void					execute_best_move(t_stack_node *stack_a,
