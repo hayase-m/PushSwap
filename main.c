@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 22:25:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 13:43:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 00:05:36 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,19 @@ int	ft_atoll(const char *str, long long *result)
 	return (1);
 }
 
-int	validate_and_parse_args(int argc, const char **argv,
+int	validate_and_parse_args(int count, char **split_str,
 		t_number_info **numbers)
 {
 	int			i;
 	long long	converted_value;
 
-	*numbers = malloc(sizeof(t_number_info) * (argc - 1));
+	*numbers = malloc(sizeof(t_number_info) * count);
 	if (!(*numbers))
 		return (0);
-	i = 1;
-	while (i < argc)
+	i = 0;
+	while (i < count)
 	{
-		if (!ft_atoll(argv[i], &converted_value))
+		if (!ft_atoll(split_str[i], &converted_value))
 		{
 			free(*numbers);
 			return (0);
@@ -92,11 +92,11 @@ int	validate_and_parse_args(int argc, const char **argv,
 			free(*numbers);
 			return (0);
 		}
-		(*numbers)[i - 1].value = (int)converted_value;
-		(*numbers)[i - 1].rank = -1;
+		(*numbers)[i].value = (int)converted_value;
+		(*numbers)[i].rank = -1;
 		i++;
 	}
-	if (has_duplicates(*numbers, argc - 1))
+	if (has_duplicates(*numbers, count))
 	{
 		free(*numbers);
 		return (0);
@@ -104,9 +104,38 @@ int	validate_and_parse_args(int argc, const char **argv,
 	return (1);
 }
 
+static char	*_join_all_args(int argc, const char **argv)
+{
+	char	*full_str;
+	char	*tmp;
+	int		i;
+
+	full_str = ft_strdup(argv[1]);
+	if (!full_str)
+		return (NULL);
+	i = 2;
+	while (i < argc)
+	{
+		tmp = full_str;
+		full_str = ft_strjoin(tmp, " ");
+		free(tmp);
+		if (!full_str)
+			return (NULL);
+		tmp = full_str;
+		full_str = ft_strjoin(tmp, argv[i]);
+		free(tmp);
+		if (!full_str)
+			return (NULL);
+		i++;
+	}
+	return (full_str);
+}
+
 int	main(int argc, const char *argv[])
 {
 	int				count;
+	char			*full_str;
+	char			**split_str;
 	t_number_info	*numbers;
 	t_stack_node	*stack_a;
 	t_stack_node	*stack_b;
@@ -114,25 +143,47 @@ int	main(int argc, const char *argv[])
 	if (argc == 1)
 		return (0);
 	numbers = NULL;
-	count = argc - 1;
-	if (validate_and_parse_args(argc, argv, &numbers) == 0)
+	full_str = _join_all_args(argc, argv);
+	if (!full_str)
 	{
 		write(2, "Error\n", 6);
 		return (1);
 	}
-	if (!assign_ranks(numbers, argc - 1))
+	split_str = ft_split(full_str, ' ');
+	free(full_str);
+	if (!split_str)
 	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	count = 0;
+	while (split_str[count] != NULL)
+		count++;
+	if (validate_and_parse_args(count, split_str, &numbers) == 0)
+	{
+		free_split(split_str);
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	free_split(split_str);
+	if (!assign_ranks(numbers, count))
+	{
+		free(numbers);
 		write(2, "Error\n", 6);
 		return (1);
 	}
 	stack_a = build_stack(numbers, count);
 	free(numbers);
 	if (!stack_a)
+	{
+		write(2, "Error\n", 6);
 		return (1);
+	}
 	stack_b = create_dummy_stack();
 	if (!stack_b)
 	{
 		free_stack(&stack_a);
+		write(2, "Error\n", 6);
 		return (1);
 	}
 	solver(stack_a, stack_b, count);

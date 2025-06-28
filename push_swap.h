@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 15:13:08 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/28 23:52:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "libft.h"
 # include <limits.h>
-# include <stdio.h>
-//////////////////////////////////////////////けせ！！//////////////
 # include <unistd.h>
 typedef struct s_number_info
 {
@@ -104,6 +102,7 @@ void					solver(t_stack_node *stack_a, t_stack_node *stack_b,
 int						ft_max(int a, int b);
 int						ft_min(int a, int b);
 int						ft_abs(int a);
+void					free_split(char **split);
 
 void					execute_best_move(t_stack_node *stack_a,
 							t_stack_node *stack_b, t_move move);

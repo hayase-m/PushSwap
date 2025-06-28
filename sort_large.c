@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 19:25:39 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 22:09:59 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	sort_large(t_stack_node *stack_a, t_stack_node *stack_b, int size)
 
 	info.total_size = size;
 	if (size <= 100)
-		info.count = 1;
+		info.count = 2;
 	else
-		info.count = 3; // 9 2=4423,3=4338, 4=4415,5=4559
+		info.count = 3;
 	info.size = size / info.count;
 	info.remainder = size % info.count;
 	_push_chunks_to_b(stack_a, stack_b, &info);

@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 17:11:52 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/23 22:20:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,8 @@ t_move	find_best_move(t_stack_node *stack_a, t_stack_node *stack_b, int size_a,
 		_calculate_cost(&current_move);
 		if (current_move.cost < best_move.cost)
 		{
-			best_move.cost = current_move.cost;
+			best_move = current_move;
 			best_move.rank = current_node->rank;
-			best_move.a_index = current_move.a_index;
-			best_move.b_index = current_move.b_index;
-			best_move.a_dir = current_move.a_dir;
-			best_move.b_dir = current_move.b_dir;
-			best_move.a_cost = current_move.a_cost;
-			best_move.b_cost = current_move.b_cost;
 		}
 		current_node = current_node->next;
 		current_move.b_index++;
