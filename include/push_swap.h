@@ -75,8 +75,7 @@ int						validate_and_parse_args(int count, char **split_str,
 							t_number_info **numbers);
 
 int						ft_atoll(const char *str, long long *result);
-int						parse_numeric_part(const char *s, int *idx, int sign,
-							long long *current_res);
+
 
 int						assign_ranks(t_number_info *numbers, int count);
 void					sort_number(t_number_info *numbers, int count);
