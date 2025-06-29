@@ -10,10 +10,12 @@ INC = -I. -I$(LIBFT_DIR)
 LIBS = $(LIBFT)
 
 SRCS = main.c \
+	parse_validate.c \
 	coordinate_compression.c \
 	stack_creation.c \
 	stack_utils.c \
 	solver.c \
+	sort_small.c \
 	sort_large.c \
 	sort_utils.c \
 	chunk_utils.c \
@@ -21,7 +23,8 @@ SRCS = main.c \
 	op_rotate.c \
 	op_reverse_rotate.c \
 	op_swap.c \
-	greedy_utils.c \
+	move_cost.c \
+	execute_move.c \
 	utils.c
 
 

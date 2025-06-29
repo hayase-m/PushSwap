@@ -58,6 +58,12 @@ typedef struct s_move
 	int					b_dir;
 }						t_move;
 
+// parse_validate.c
+int					has_duplicates(t_number_info *numbers, int count);
+int					ft_atoll(const char *str, long long *result);
+int					validate_and_parse_args(int count, char **split_str,
+						t_number_info **numbers);
+
 int						assign_ranks(t_number_info *numbers, int count);
 
 t_stack_node			*create_dummy_stack(void);
@@ -71,6 +77,11 @@ void					find_and_rotate(t_stack_node *stack_a, int target_rank,
 							int size);
 void					execute_rotation(t_stack_node *stack, int index,
 							int size);
+
+// sort_small.c
+void				sort_three(t_stack_node *stack_a);
+void				sort_up_to_five(t_stack_node *stack_a,
+						t_stack_node *stack_b, int size);
 
 void					op_sa(t_stack_node *stack_a);
 void					op_sb(t_stack_node *stack_b);
