@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdlib.h> // For exit()
 
 int	ft_max(int a, int b)
 {
@@ -41,4 +42,10 @@ void	free_split(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void	handle_error(void)
+{
+	write(2, "Error\n", 6);
+	exit(1);
 }

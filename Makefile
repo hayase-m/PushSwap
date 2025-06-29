@@ -9,22 +9,23 @@ CFLAGS = -Wall -Wextra -Werror
 INC = -Iinclude -I$(LIBFT_DIR)
 LIBS = $(LIBFT)
 
-SRCS = src/main.c 
-	src/parse_validate.c 
-	src/coordinate_compression.c 
-	src/stack/stack_creation.c 
-	src/stack/stack_utils.c 
-	src/sorting/solver.c 
-	src/sorting/sort_small.c 
-	src/sorting/sort_large.c 
-	src/sorting/sort_utils.c 
-	src/sorting/chunk_utils.c 
-	src/operations/op_push.c 
-	src/operations/op_rotate.c 
-	src/operations/op_reverse_rotate.c 
-	src/operations/op_swap.c 
-	src/sorting/move_cost.c 
-	src/sorting/execute_move.c 
+SRCS = src/main.c \
+	src/parse_validate.c \
+	src/coordinate_compression.c \
+	src/input_processing.c \
+	src/stack/stack_creation.c \
+	src/stack/stack_utils.c \
+	src/sorting/solver.c \
+	src/sorting/sort_small.c \
+	src/sorting/sort_large.c \
+	src/sorting/sort_utils.c \
+	src/sorting/chunk_utils.c \
+	src/operations/op_push.c \
+	src/operations/op_rotate.c \
+	src/operations/op_reverse_rotate.c \
+	src/operations/op_swap.c \
+	src/sorting/move_cost.c \
+	src/sorting/execute_move.c \
 	src/utils.c
 
 

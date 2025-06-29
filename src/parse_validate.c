@@ -35,7 +35,7 @@ int	has_duplicates(t_number_info *numbers, int count)
 int	ft_atoll(const char *str, long long *result)
 {
 	int		i;
-	int		sign;
+	int	sign;
 	long long	res;
 	int		digit_count;
 

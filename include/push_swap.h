@@ -66,6 +66,10 @@ int					validate_and_parse_args(int count, char **split_str,
 
 int						assign_ranks(t_number_info *numbers, int count);
 
+// input_processing.c
+int						init_numbers_from_args(int argc, const char **argv,
+						t_number_info **numbers, int *count);
+
 t_stack_node			*create_dummy_stack(void);
 t_stack_node			*create_node(int value, int rank);
 void					add_node_back(t_stack_node *stack_head,
@@ -112,6 +116,7 @@ void					solver(t_stack_node *stack_a, t_stack_node *stack_b,
 int						ft_max(int a, int b);
 int						ft_min(int a, int b);
 void					free_split(char **split);
+void					handle_error(void);
 
 void					execute_best_move(t_stack_node *stack_a,
 							t_stack_node *stack_b, t_move move);
