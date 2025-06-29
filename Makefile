@@ -6,26 +6,26 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-INC = -I. -I$(LIBFT_DIR)
+INC = -Iinclude -I$(LIBFT_DIR)
 LIBS = $(LIBFT)
 
-SRCS = main.c \
-	parse_validate.c \
-	coordinate_compression.c \
-	stack_creation.c \
-	stack_utils.c \
-	solver.c \
-	sort_small.c \
-	sort_large.c \
-	sort_utils.c \
-	chunk_utils.c \
-	op_push.c \
-	op_rotate.c \
-	op_reverse_rotate.c \
-	op_swap.c \
-	move_cost.c \
-	execute_move.c \
-	utils.c
+SRCS = src/main.c 
+	src/parse_validate.c 
+	src/coordinate_compression.c 
+	src/stack/stack_creation.c 
+	src/stack/stack_utils.c 
+	src/sorting/solver.c 
+	src/sorting/sort_small.c 
+	src/sorting/sort_large.c 
+	src/sorting/sort_utils.c 
+	src/sorting/chunk_utils.c 
+	src/operations/op_push.c 
+	src/operations/op_rotate.c 
+	src/operations/op_reverse_rotate.c 
+	src/operations/op_swap.c 
+	src/sorting/move_cost.c 
+	src/sorting/execute_move.c 
+	src/utils.c
 
 
 OBJS = $(SRCS:.c=.o)
