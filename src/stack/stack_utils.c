@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 22:34:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 00:08:47 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:02:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_stack_node	*create_node(int value, int rank)
 	new_node->prev = NULL;
 	return (new_node);
 }
+
 void	add_node_back(t_stack_node *stack_head, t_stack_node *new_node)
 {
 	t_stack_node	*last_node;

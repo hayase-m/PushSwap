@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_validate.c                                   :+:      :+:    :+:   */
+/*   argument_validation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 23:48:32 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:02:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,63 +32,23 @@ int	has_duplicates(t_number_info *numbers, int count)
 	return (0);
 }
 
-static int	is_overflow(long long res, int sign, int digit)
+int	process_single_number(const char *str, t_number_info *num_info)
 {
-	if (sign == 1)
-	{
-		if (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && digit > LLONG_MAX
-				% 10))
-			return (1);
-	}
-	else
-	{
-		if (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && digit > (LLONG_MAX
-					% 10) + 1))
-			return (1);
-	}
-	return (0);
-}
+	long long	converted_value;
 
-int	ft_atoll(const char *str, long long *result)
-{
-	int			i;
-	int			sign;
-	long long	res;
-	int			digit_count;
-
-	i = 0;
-	sign = 1;
-	digit_count = 0;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		digit_count++;
-		if (is_overflow(res, sign, str[i] - '0'))
-			return (0);
-		res = res * 10 + (str[i] - '0');
-		i++;
-	}
-	if (digit_count == 0)
+	if (!ft_atoll(str, &converted_value))
 		return (0);
-	*result = res * sign;
+	if (converted_value > INT_MAX || converted_value < INT_MIN)
+		return (0);
+	num_info->value = (int)converted_value;
+	num_info->rank = -1;
 	return (1);
 }
 
 int	validate_and_parse_args(int count, char **split_str,
 		t_number_info **numbers)
 {
-	int			i;
-	long long	converted_value;
+	int	i;
 
 	*numbers = malloc(sizeof(t_number_info) * count);
 	if (!(*numbers))
@@ -96,18 +56,11 @@ int	validate_and_parse_args(int count, char **split_str,
 	i = 0;
 	while (i < count)
 	{
-		if (!ft_atoll(split_str[i], &converted_value))
+		if (!process_single_number(split_str[i], &(*numbers)[i]))
 		{
 			free(*numbers);
 			return (0);
 		}
-		if (converted_value > INT_MAX || converted_value < INT_MIN)
-		{
-			free(*numbers);
-			return (0);
-		}
-		(*numbers)[i].value = (int)converted_value;
-		(*numbers)[i].rank = -1;
 		i++;
 	}
 	if (has_duplicates(*numbers, count))

@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 00:06:55 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:01:29 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "libft.h"
 # include <limits.h>
+# include <stdlib.h>
 # include <unistd.h>
+
 typedef struct s_number_info
 {
 	int					value;
@@ -58,18 +60,29 @@ typedef struct s_move
 	int					b_dir;
 }						t_move;
 
+typedef struct s_a_insert_info
+{
+	int					min_rank_index;
+	int					min_rank;
+	int					best_rank;
+	int					best_index;
+}						t_a_insert_info;
 
-int					has_duplicates(t_number_info *numbers, int count);
+int						has_duplicates(t_number_info *numbers, int count);
+int						process_single_number(const char *str,
+							t_number_info *num_info);
+int						validate_and_parse_args(int count, char **split_str,
+							t_number_info **numbers);
+
 int						ft_atoll(const char *str, long long *result);
-int						is_overflow(long long res, int sign, int digit);
-int					validate_and_parse_args(int count, char **split_str,
-						t_number_info **numbers);
+int						parse_numeric_part(const char *s, int *idx, int sign,
+							long long *current_res);
 
 int						assign_ranks(t_number_info *numbers, int count);
-
+void					sort_number(t_number_info *numbers, int count);
 
 int						init_numbers_from_args(int argc, const char **argv,
-						t_number_info **numbers, int *count);
+							t_number_info **numbers, int *count);
 
 t_stack_node			*create_dummy_stack(void);
 t_stack_node			*create_node(int value, int rank);
@@ -83,10 +96,9 @@ void					find_and_rotate(t_stack_node *stack_a, int target_rank,
 void					execute_rotation(t_stack_node *stack, int index,
 							int size);
 
-
-void				sort_three(t_stack_node *stack_a);
-void				sort_up_to_five(t_stack_node *stack_a,
-						t_stack_node *stack_b, int size);
+void					sort_three(t_stack_node *stack_a);
+void					sort_up_to_five(t_stack_node *stack_a,
+							t_stack_node *stack_b, int size);
 
 void					op_sa(t_stack_node *stack_a);
 void					op_sb(t_stack_node *stack_b);

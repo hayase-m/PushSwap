@@ -1,50 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   greedy_utils.c                                     :+:      :+:    :+:   */
+/*   move_cost.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 20:31:20 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 00:00:00 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 00:57:51 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
+static void	_search_best_index(t_stack_node *stack_a, int target_rank,
+		t_a_insert_info *insert_info)
 {
-	int				i;
 	t_stack_node	*current_node;
-	int				min_rank_index;
-	int				min_rank;
-	int				best_rank;
-	int				best_index;
+	int				i;
 
 	i = 0;
 	current_node = stack_a->next;
-	min_rank = INT_MAX;
-	best_rank = INT_MAX;
-	best_index = -1;
 	while (current_node != stack_a)
 	{
-		if (current_node->rank < min_rank)
+		if (current_node->rank < insert_info->min_rank)
 		{
-			min_rank_index = i;
-			min_rank = current_node->rank;
+			insert_info->min_rank_index = i;
+			insert_info->min_rank = current_node->rank;
 		}
-		if (current_node->rank > target_rank && current_node->rank < best_rank)
+		if (current_node->rank > target_rank
+			&& current_node->rank < insert_info->best_rank)
 		{
-			best_index = i;
-			best_rank = current_node->rank;
+			insert_info->best_index = i;
+			insert_info->best_rank = current_node->rank;
 		}
 		i++;
 		current_node = current_node->next;
 	}
-	if (best_index != -1)
-		return (best_index);
+}
+
+static int	_find_dest_index_in_a(t_stack_node *stack_a, int target_rank)
+{
+	t_a_insert_info	insert_info;
+
+	insert_info.min_rank = INT_MAX;
+	insert_info.best_rank = INT_MAX;
+	insert_info.best_index = -1;
+	_search_best_index(stack_a, target_rank, &insert_info);
+	if (insert_info.best_index != -1)
+		return (insert_info.best_index);
 	else
-		return (min_rank_index);
+		return (insert_info.min_rank_index);
 }
 
 static void	_calculate_cost(t_move *move)

@@ -6,12 +6,11 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:24:03 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 23:46:16 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:53:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
 
 int	ft_max(int a, int b)
 {

@@ -10,7 +10,8 @@ INC = -Iinclude -I$(LIBFT_DIR)
 LIBS = $(LIBFT)
 
 SRCS = src/main.c \
-	src/parse_validate.c \
+	src/parsing/number_conversion.c \
+	src/parsing/argument_validation.c \
 	src/coordinate_compression.c \
 	src/input_processing.c \
 	src/stack/stack_creation.c \

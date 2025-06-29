@@ -6,11 +6,21 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/23 22:09:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:20:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	_calc_size_and_range(int *current_chunk_size, t_chunk_info *info,
+		int *i, t_range *range)
+{
+	*current_chunk_size = info->size;
+	if (*i < info->remainder)
+		*current_chunk_size++;
+	range->start = range->end + 1;
+	range->end = range->start + *current_chunk_size - 1;
+}
 
 static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 		t_chunk_info *info)
@@ -26,13 +36,9 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 	current_size_a = info->total_size;
 	while (i < info->count)
 	{
-		current_chunk_size = info->size;
-		if (i < info->remainder)
-			current_chunk_size++;
-		range.start = range.end + 1;
-		range.end = range.start + current_chunk_size - 1;
-		j = 0;
-		while (j < current_chunk_size)
+		_calc_size_and_range(&current_chunk_size, info, &i, &range);
+		j = -1;
+		while (j++ < current_chunk_size)
 		{
 			push_cheapest_in_range(stack_a, stack_b, &range, current_size_a);
 			current_size_a--;
@@ -41,7 +47,6 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 				if (stack_b->next->rank < (range.end / 2))
 					op_rb(stack_b);
 			}
-			j++;
 		}
 		i++;
 	}
