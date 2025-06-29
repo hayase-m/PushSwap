@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_init.c                                     :+:      :+:    :+:   */
+/*   input_processing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 00:00:00 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:48:29 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static char	*_join_all_args(int argc, const char **argv)
 	return (full_str);
 }
 
-int	init_numbers_from_args(int argc, const char **argv,
-		t_number_info **numbers, int *count)
+int	init_numbers_from_args(int argc, const char **argv, t_number_info **numbers,
+		int *count)
 {
 	char	*full_str;
 	char	**split_str;

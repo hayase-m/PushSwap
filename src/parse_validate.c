@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/29 00:00:00 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/29 23:48:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,29 @@ int	has_duplicates(t_number_info *numbers, int count)
 	return (0);
 }
 
+static int	is_overflow(long long res, int sign, int digit)
+{
+	if (sign == 1)
+	{
+		if (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && digit > LLONG_MAX
+				% 10))
+			return (1);
+	}
+	else
+	{
+		if (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && digit > (LLONG_MAX
+					% 10) + 1))
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_atoll(const char *str, long long *result)
 {
-	int		i;
-	int	sign;
+	int			i;
+	int			sign;
 	long long	res;
-	int		digit_count;
+	int			digit_count;
 
 	i = 0;
 	sign = 1;
@@ -56,10 +73,7 @@ int	ft_atoll(const char *str, long long *result)
 		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		digit_count++;
-		if ((sign == 1 && (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10
-						&& (str[i] - '0') > LLONG_MAX % 10))) || (sign == -1
-				&& (res > LLONG_MAX / 10 || (res == LLONG_MAX / 10 && (str[i]
-							- '0') > (LLONG_MAX % 10) + 1))))
+		if (is_overflow(res, sign, str[i] - '0'))
 			return (0);
 		res = res * 10 + (str[i] - '0');
 		i++;
@@ -73,7 +87,7 @@ int	ft_atoll(const char *str, long long *result)
 int	validate_and_parse_args(int count, char **split_str,
 		t_number_info **numbers)
 {
-	int		i;
+	int			i;
 	long long	converted_value;
 
 	*numbers = malloc(sizeof(t_number_info) * count);
