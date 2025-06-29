@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 21:32:57 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/30 01:01:29 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:31:19 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int						validate_and_parse_args(int count, char **split_str,
 							t_number_info **numbers);
 
 int						ft_atoll(const char *str, long long *result);
-
 
 int						assign_ranks(t_number_info *numbers, int count);
 void					sort_number(t_number_info *numbers, int count);

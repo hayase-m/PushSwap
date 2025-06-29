@@ -6,17 +6,17 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:52:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/06/30 01:22:34 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/06/30 01:45:38 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static void	_calc_size_and_range(int *current_chunk_size, t_chunk_info *info,
-		int *i, t_range *range)
+		int i, t_range *range)
 {
 	*current_chunk_size = info->size;
-	if (*i < info->remainder)
+	if (i < info->remainder)
 		(*current_chunk_size)++;
 	range->start = range->end + 1;
 	range->end = range->start + *current_chunk_size - 1;
@@ -36,7 +36,7 @@ static void	_push_chunks_to_b(t_stack_node *stack_a, t_stack_node *stack_b,
 	current_size_a = info->total_size;
 	while (i < info->count)
 	{
-		_calc_size_and_range(&current_chunk_size, info, &i, &range);
+		_calc_size_and_range(&current_chunk_size, info, i, &range);
 		j = -1;
 		while (++j < current_chunk_size)
 		{
