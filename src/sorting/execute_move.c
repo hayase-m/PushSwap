@@ -42,7 +42,7 @@ static void	_execute_same_direction(t_stack_node *stack_a,
 	}
 }
 
-static void	_execute_diff_direction(t_stack_node *stack_a,
+static void	_execute_diff_direction_ra_rrb(t_stack_node *stack_a,
 		t_stack_node *stack_b, t_move *move)
 {
 	int	a_rotations;
@@ -50,20 +50,45 @@ static void	_execute_diff_direction(t_stack_node *stack_a,
 
 	a_rotations = move->a_cost;
 	b_rotations = move->b_cost;
+	while (a_rotations > 0)
+	{
+		op_ra(stack_a);
+		a_rotations--;
+	}
+	while (b_rotations > 0)
+	{
+		op_rrb(stack_b);
+		b_rotations--;
+	}
+}
+
+static void	_execute_diff_direction_rra_rb(t_stack_node *stack_a,
+		t_stack_node *stack_b, t_move *move)
+{
+	int	a_rotations;
+	int	b_rotations;
+
+	a_rotations = move->a_cost;
+	b_rotations = move->b_cost;
+	while (a_rotations > 0)
+	{
+		op_rra(stack_a);
+		a_rotations--;
+	}
+	while (b_rotations > 0)
+	{
+		op_rb(stack_b);
+		b_rotations--;
+	}
+}
+
+static void	_execute_diff_direction(t_stack_node *stack_a,
+		t_stack_node *stack_b, t_move *move)
+{
 	if (move->a_dir == 1)
-	{
-		while (a_rotations--)
-			op_ra(stack_a);
-		while (b_rotations--)
-			op_rrb(stack_b);
-	}
+		_execute_diff_direction_ra_rrb(stack_a, stack_b, move);
 	else
-	{
-		while (a_rotations--)
-			op_rra(stack_a);
-		while (b_rotations--)
-			op_rb(stack_b);
-	}
+		_execute_diff_direction_rra_rb(stack_a, stack_b, move);
 }
 
 void	execute_best_move(t_stack_node *stack_a, t_stack_node *stack_b,
